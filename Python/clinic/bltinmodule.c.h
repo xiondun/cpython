@@ -173,7 +173,7 @@ PyDoc_STRVAR(builtin_compile__doc__,
 static PyObject *
 builtin_compile_impl(PyObject *module, PyObject *source, PyObject *filename,
                      const char *mode, int flags, int dont_inherit,
-                     int optimize, int feature_version);
+                     int optimize, int _feature_version);
 
 static PyObject *
 builtin_compile(PyObject *module, PyObject *const *args, Py_ssize_t nargs, PyObject *kwnames)
@@ -189,7 +189,7 @@ builtin_compile(PyObject *module, PyObject *const *args, Py_ssize_t nargs, PyObj
     int flags = 0;
     int dont_inherit = 0;
     int optimize = -1;
-    int feature_version = -1;
+    int _feature_version = -1;
 
     args = _PyArg_UnpackKeywords(args, nargs, NULL, kwnames, &_parser, 3, 6, 0, argsbuf);
     if (!args) {
@@ -266,12 +266,12 @@ skip_optional_pos:
                         "integer argument expected, got float" );
         goto exit;
     }
-    feature_version = _PyLong_AsInt(args[6]);
-    if (feature_version == -1 && PyErr_Occurred()) {
+    _feature_version = _PyLong_AsInt(args[6]);
+    if (_feature_version == -1 && PyErr_Occurred()) {
         goto exit;
     }
 skip_optional_kwonly:
-    return_value = builtin_compile_impl(module, source, filename, mode, flags, dont_inherit, optimize, feature_version);
+    return_value = builtin_compile_impl(module, source, filename, mode, flags, dont_inherit, optimize, _feature_version);
 
 exit:
     return return_value;
@@ -855,4 +855,4 @@ builtin_issubclass(PyObject *module, PyObject *const *args, Py_ssize_t nargs)
 exit:
     return return_value;
 }
-/*[clinic end generated code: output=29686a89b739d600 input=a9049054013a1b77]*/
+/*[clinic end generated code: output=f1783dbc98353b33 input=a9049054013a1b77]*/

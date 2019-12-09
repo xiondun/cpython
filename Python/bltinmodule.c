@@ -702,7 +702,7 @@ compile as builtin_compile
     dont_inherit: bool(accept={int}) = False
     optimize: int = -1
     *
-    _feature_version as feature_version: int = -1
+    _feature_version: int = -1
 
 Compile source into a code object that can be executed by exec() or eval().
 
@@ -721,8 +721,8 @@ in addition to any features explicitly specified.
 static PyObject *
 builtin_compile_impl(PyObject *module, PyObject *source, PyObject *filename,
                      const char *mode, int flags, int dont_inherit,
-                     int optimize, int feature_version)
-/*[clinic end generated code: output=b0c09c84f116d3d7 input=40171fb92c1d580d]*/
+                     int optimize, int _feature_version)
+/*[clinic end generated code: output=265a7cf5d63cf931 input=84f3ab19e8749207]*/
 {
     PyObject *source_copy;
     const char *str;
@@ -733,8 +733,8 @@ builtin_compile_impl(PyObject *module, PyObject *source, PyObject *filename,
 
     PyCompilerFlags cf = _PyCompilerFlags_INIT;
     cf.cf_flags = flags | PyCF_SOURCE_IS_UTF8;
-    if (feature_version >= 0 && (flags & PyCF_ONLY_AST)) {
-        cf.cf_feature_version = feature_version;
+    if (_feature_version >= 0 && (flags & PyCF_ONLY_AST)) {
+        cf.cf_feature_version = _feature_version;
     }
 
     if (flags &
